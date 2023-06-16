@@ -6,11 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
-  defaultBackend:
-    service:
-      name: auth-srv
-      port:
-        number: 80
+  
   rules:
   - host: test.dev
     http:

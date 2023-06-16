@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Password } from "../utils/password";
 
 // Create user attribute interface
 interface UserAttr {
@@ -28,6 +29,16 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// hash password
+userSchema.pre("save", async function (done) {
+  if (this.isModified("password")) {
+    const hashed = await Password.toHash(this.get("password"));
+    this.set("password", hashed);
+  }
+  done();
+});
+
+// build method for using mongoose with typescript
 userSchema.statics.build = (attr: UserAttr) => {
   return new User(attr);
 };

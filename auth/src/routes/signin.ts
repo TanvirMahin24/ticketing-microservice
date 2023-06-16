@@ -14,13 +14,12 @@ router.post(
         "Enter password with minimum 4 charecters and maximum of 20 charecters!"
       ),
   ],
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     // Validation Result
     const errors = validationResult(req);
 
     // Handle error response
     if (!errors.isEmpty()) {
-      console.log(errors.array());
       throw new RequestValidationError(errors.array());
     }
 

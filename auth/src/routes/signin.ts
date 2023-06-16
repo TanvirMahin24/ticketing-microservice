@@ -26,7 +26,7 @@ router.post(
     // Request body data
     const { email, password } = req.body;
 
-    res.send("Signin");
+    //res.send("Signin");
   }
 );
 

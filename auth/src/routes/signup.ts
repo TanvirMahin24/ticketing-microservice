@@ -34,7 +34,6 @@ router.post(
     // response for existing user
     if (userExist) {
       throw new BadRequestError("Email already in use!");
-      return;
     }
 
     // If User with email does not exists

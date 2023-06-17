@@ -1,8 +1,9 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
+import { body } from "express-validator";
 import { BadRequestError } from "../errors/bad-request-error";
-import { RequestValidationError } from "../errors/request-validation-error";
 import { User } from "../models/user";
+import jwt from "jsonwebtoken";
+import { validateRequest } from "../middlewares/validate-request";
 const router = express.Router();
 
 router.post(
@@ -16,15 +17,8 @@ router.post(
         "Enter password with minimum 4 charecters and maximum of 20 charecters!"
       ),
   ],
+  validateRequest,
   async (req: Request, res: Response) => {
-    // Validation Result
-    const errors = validationResult(req);
-
-    // Handle error response
-    if (!errors.isEmpty()) {
-      throw new RequestValidationError(errors.array());
-    }
-
     // Request body data
     const { email, password } = req.body;
 
@@ -39,6 +33,15 @@ router.post(
     // If User with email does not exists
     const user = User.build({ email, password });
     await user.save();
+
+    // Create JWT
+    const userJwt = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_KEY!
+    );
+
+    // Set te token into session
+    req.session = { jwt: userJwt };
 
     // Send success response
     return res.status(201).send(user);

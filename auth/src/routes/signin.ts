@@ -1,6 +1,10 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
-import { RequestValidationError } from "../errors/request-validation-error";
+import { body } from "express-validator";
+import { BadRequestError } from "../errors/bad-request-error";
+import { validateRequest } from "../middlewares/validate-request";
+import { User } from "../models/user";
+import { Password } from "../utils/password";
+import jwt from "jsonwebtoken";
 const router = express.Router();
 
 router.post(
@@ -9,24 +13,46 @@ router.post(
     body("email").isEmail().withMessage("Enter a valid email address!"),
     body("password")
       .trim()
-      .isLength({ min: 4, max: 20 })
+      .notEmpty()
       .withMessage(
         "Enter password with minimum 4 charecters and maximum of 20 charecters!"
       ),
   ],
+  validateRequest,
   async (req: Request, res: Response) => {
-    // Validation Result
-    const errors = validationResult(req);
-
-    // Handle error response
-    if (!errors.isEmpty()) {
-      throw new RequestValidationError(errors.array());
-    }
-
     // Request body data
     const { email, password } = req.body;
 
-    //res.send("Signin");
+    // Find user by email
+    const existingUser = await User.findOne({ email });
+
+    // If no user found
+    if (!existingUser) {
+      throw new BadRequestError("Invalid credentials!");
+    }
+
+    // Check password
+    const isValidPassword = await Password.compare(
+      existingUser.password,
+      password
+    );
+
+    // If password do not match
+    if (!isValidPassword) {
+      throw new BadRequestError("Invalid credentials!");
+    }
+
+    // Create JWT
+    const userJwt = jwt.sign(
+      { id: existingUser.id, email: existingUser.email },
+      process.env.JWT_KEY!
+    );
+
+    // Set te token into session
+    req.session = { jwt: userJwt };
+
+    // Send success response
+    return res.status(200).send(existingUser);
   }
 );
 

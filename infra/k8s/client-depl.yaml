@@ -15,7 +15,10 @@ spec:
       containers:
         - name: client
           image: tanvirmahin24/tkt-client
-          
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service

@@ -11,8 +11,8 @@ const start = async () => {
     await mongoose.connect(`mongodb://auth-mongo-srv:27017/auth`);
     console.log("[AUTH] MongoDB connected!");
 
-    app.listen(3000, () => {
-      console.log("[AUTH] Listening on 3000");
+    app.listen(5001, () => {
+      console.log("[AUTH] Listening on 5001");
     });
   } catch (error) {
     console.log("[AUTH] DB connection Error!!!!!");

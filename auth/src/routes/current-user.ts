@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 const router = express.Router();
-import { currentUser } from "../middlewares/current-user";
+import { currentUser } from "@inovit-bd/ms-common";
 
 router.get(
   "/api/users/currentuser",

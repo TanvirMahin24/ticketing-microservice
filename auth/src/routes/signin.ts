@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
-import { BadRequestError } from "../errors/bad-request-error";
-import { validateRequest } from "../middlewares/validate-request";
+import { BadRequestError } from "@inovit-bd/ms-common";
+import { validateRequest } from "@inovit-bd/ms-common";
 import { User } from "../models/user";
 import { Password } from "../utils/password";
 import jwt from "jsonwebtoken";

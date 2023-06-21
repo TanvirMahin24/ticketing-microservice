@@ -12,13 +12,13 @@ const start = async () => {
 
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("[AUTH] MongoDB connected!");
+    console.log("[TICKETS] MongoDB connected!");
 
     app.listen(5001, () => {
-      console.log("[AUTH] Listening on 5001 ");
+      console.log("[TICKETS] Listening on 5001");
     });
   } catch (error) {
-    console.log("[AUTH] DB connection Error!!!!!");
+    console.log("[TICKETS] DB connection Error!!!!!");
   }
 };
 

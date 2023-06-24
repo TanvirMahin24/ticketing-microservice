@@ -5,19 +5,19 @@ import { natsWrapper } from "./nats-wrapper";
 const start = async () => {
   // check if ENV does not exists
   if (!process.env.JWT_KEY) {
-    throw Error("[TICKETS] JWT KEY is undefined!");
+    throw Error("[ORDERS] JWT KEY is undefined!");
   }
   if (!process.env.MONGO_URI) {
-    throw Error("[TICKETS] MONGO_URI must be defined!");
+    throw Error("[ORDERS] MONGO_URI must be defined!");
   }
   if (!process.env.NATS_CLIENT_ID) {
-    throw new Error("[TICKETS] NATS_CLIENT_ID must be defined");
+    throw new Error("[ORDERS] NATS_CLIENT_ID must be defined");
   }
   if (!process.env.NATS_URL) {
-    throw new Error("[TICKETS] NATS_URL must be defined");
+    throw new Error("[ORDERS] NATS_URL must be defined");
   }
   if (!process.env.NATS_CLUSTER_ID) {
-    throw new Error("[TICKETS] NATS_CLUSTER_ID must be defined");
+    throw new Error("[ORDERS] NATS_CLUSTER_ID must be defined");
   }
 
   try {
@@ -29,19 +29,19 @@ const start = async () => {
 
     // When NATS client closed
     natsWrapper.client.on("close", () => {
-      console.log("[TICKETS] NATS Client closed!");
+      console.log("[ORDERS] NATS Client closed!");
       process.exit();
     });
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("[TICKETS] MongoDB connected!");
+    console.log("[ORDERS] MongoDB connected!");
 
     app.listen(5001, () => {
-      console.log("[TICKETS] Listening on 5001");
+      console.log("[ORDERS] Listening on 5001");
     });
   } catch (error) {
-    console.log("[TICKETS] DB connection Error!!!!!");
+    console.log("[ORDERS] DB connection Error!!!!!");
   }
 };
 

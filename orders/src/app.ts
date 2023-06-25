@@ -4,10 +4,10 @@ import cookieSession from "cookie-session";
 
 import "express-async-errors";
 import { currentUser, errorHandler, NotFoundError } from "@inovit-bd/ms-common";
-import { indexOrdersRouter } from "./routes";
-import { newOrdersRouter } from "./routes/new";
-import { showOrdersRouter } from "./routes/show";
-import { deleteOrdersRouter } from "./routes/delete";
+import { indexOrderRouter } from "./routes";
+import { newOrderRouter } from "./routes/new";
+import { showOrderRouter } from "./routes/show";
+import { deleteOrderRouter } from "./routes/delete";
 
 const app = express();
 app.set("trust proxy", true);
@@ -21,10 +21,10 @@ app.use(
 
 app.use(currentUser);
 
-app.use(newOrdersRouter);
-app.use(showOrdersRouter);
-app.use(deleteOrdersRouter);
-app.use(indexOrdersRouter);
+app.use(newOrderRouter);
+app.use(showOrderRouter);
+app.use(deleteOrderRouter);
+app.use(indexOrderRouter);
 
 app.all("*", async (req, res) => {
   throw new NotFoundError();

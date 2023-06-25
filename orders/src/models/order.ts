@@ -1,13 +1,10 @@
-import { OrderStatus } from "@inovit-bd/ms-common";
 import mongoose from "mongoose";
 import { TicketDoc } from "./ticket";
-
-export { OrderStatus };
 
 // Create user attribute interface
 interface OrderAttr {
   userId: string;
-  status: OrderStatus;
+  status: "created" | "cancelled" | "awaiting:payment" | "complete";
   expiresAt: Date;
   ticket: TicketDoc;
 }
@@ -20,7 +17,7 @@ interface OrderModel extends mongoose.Model<OrderDoc> {
 // Order document inteface
 interface OrderDoc extends mongoose.Document {
   userId: string;
-  status: OrderStatus;
+  status: "created" | "cancelled" | "awaiting:payment" | "complete";
   expiresAt: Date;
   ticket: TicketDoc;
 }
@@ -30,8 +27,7 @@ const orderSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: Object.values(OrderStatus),
-      default: OrderStatus.Created,
+      default: "created",
     },
     expiresAt: {
       type: mongoose.Schema.Types.Date,

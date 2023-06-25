@@ -4,7 +4,6 @@ import {
   requireAuth,
   validateRequest,
   NotFoundError,
-  OrderStatus,
   BadRequestError,
 } from "@inovit-bd/ms-common";
 import { body } from "express-validator";
@@ -50,7 +49,7 @@ router.post(
     // Build the order and save it to the database
     const order = Order.build({
       userId: req.currentUser!.id,
-      status: OrderStatus.Created,
+      status: "created",
       expiresAt: expiration,
       ticket,
     });

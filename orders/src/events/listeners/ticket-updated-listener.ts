@@ -17,9 +17,6 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
     const { title, price } = data;
     ticket.set({ title, price });
     await ticket.save();
-    console.log("TICKET UPDATET EVENT RECIVED");
-    console.log(ticket);
-    console.log(data);
     msg.ack();
   }
 }

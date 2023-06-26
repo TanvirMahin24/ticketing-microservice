@@ -6,7 +6,7 @@ class NatsWrapper {
   get client() {
     if (!this._client) {
       throw new Error(
-        "[PAYMENTS] Can not access NATS client before initialization!"
+        "[TICKETS] Can not access NATS client before initialization!"
       );
     }
 
@@ -17,7 +17,7 @@ class NatsWrapper {
     this._client = nats.connect(clusterId, clientId, { url });
     return new Promise<void>((resolve, reject) => {
       this.client.on("connect", () => {
-        console.log("[PAYMENTS] Connected to NATS");
+        console.log("[TICKETS] Connected to NATS");
         resolve();
       });
 

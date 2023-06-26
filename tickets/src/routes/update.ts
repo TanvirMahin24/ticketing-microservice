@@ -5,6 +5,7 @@ import {
   NotFoundError,
   requireAuth,
   NotAuthorizedError,
+  BadRequestError,
 } from "@inovit-bd/ms-common";
 import { Ticket } from "../models/ticket";
 import { natsWrapper } from "../nats-wrapper";
@@ -27,6 +28,10 @@ router.put(
 
     if (!ticket) {
       throw new NotFoundError();
+    }
+
+    if (ticket.orderId) {
+      throw new BadRequestError("Can not edit a reserved ticket!");
     }
 
     if (ticket.userId !== req.currentUser!.id) {

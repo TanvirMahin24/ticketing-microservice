@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 const start = async () => {
-  // check if ENV does not exists
+  // check if ENV does not exists or not
   if (!process.env.JWT_KEY) {
     throw Error("JWT KEY is undefined!");
   }

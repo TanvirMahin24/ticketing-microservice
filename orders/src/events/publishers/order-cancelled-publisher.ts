@@ -1,5 +1,5 @@
-import { OrderCancelledEvent, Publisher, Subject } from "@inovit-bd/ms-common";
+import { Subjects, Publisher, OrderCancelledEvent } from "@inovit-bd/ms-common";
 
 export class OrderCancelledPublisher extends Publisher<OrderCancelledEvent> {
-  subject: Subject.OrderCancelled = Subject.OrderCancelled;
+  subject: Subjects.OrderCancelled = Subjects.OrderCancelled;
 }

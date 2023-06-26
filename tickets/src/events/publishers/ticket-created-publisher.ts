@@ -1,5 +1,5 @@
-import { Publisher, Subject, TicketCreatedEvent } from "@inovit-bd/ms-common";
+import { Publisher, Subjects, TicketCreatedEvent } from "@inovit-bd/ms-common";
 
 export class TicketCreatedPublisher extends Publisher<TicketCreatedEvent> {
-  subject: Subject.TicketCreated = Subject.TicketCreated;
+  subject: Subjects.TicketCreated = Subjects.TicketCreated;
 }

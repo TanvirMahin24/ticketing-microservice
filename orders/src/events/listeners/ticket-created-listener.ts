@@ -1,10 +1,10 @@
-import { Listener, Subject, TicketCreatedEvent } from "@inovit-bd/ms-common";
 import { Message } from "node-nats-streaming";
+import { Subjects, Listener, TicketCreatedEvent } from "@inovit-bd/ms-common";
 import { Ticket } from "../../models/ticket";
 import { queueGroupName } from "./queue-group-name";
 
 export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
-  subject: Subject.TicketCreated = Subject.TicketCreated;
+  subject: Subjects.TicketCreated = Subjects.TicketCreated;
   queueGroupName = queueGroupName;
 
   async onMessage(data: TicketCreatedEvent["data"], msg: Message) {
@@ -16,6 +16,8 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
       price,
     });
     await ticket.save();
+    console.log("Ticket CREATED LISTENER RECIVED!!!");
+    console.log(ticket);
 
     msg.ack();
   }

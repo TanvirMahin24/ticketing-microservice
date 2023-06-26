@@ -20,9 +20,7 @@ const MyApp = ({ Component, pageProps, currentUser }) => {
   } else {
     return (
       <LayoutProvider>
-        <Layout>
-          <Component {...props} />
-        </Layout>
+        <Component {...props} />
       </LayoutProvider>
     );
   }
@@ -34,7 +32,11 @@ MyApp.getInitialProps = async (appCtx) => {
 
   let pageProps = {};
   if (appCtx.Component.getInitialProps) {
-    pageProps = await appCtx.Component.getInitialProps(appCtx.ctx);
+    pageProps = await appCtx.Component.getInitialProps(
+      appCtx.ctx,
+      client,
+      data.currentUser
+    );
   }
   return {
     pageProps,

@@ -4,9 +4,9 @@ import Swal from "sweetalert2";
 import { configJSON } from "../utils/postHeader";
 
 const useRequet = ({ url, method, body, onSuccess }) => {
-  const request = async () => {
+  const request = async (props = {}) => {
     try {
-      const res = await axios[method](url, body, configJSON);
+      const res = await axios[method](url, { ...body, ...props }, configJSON);
       if (onSuccess) {
         onSuccess(res.data);
       }

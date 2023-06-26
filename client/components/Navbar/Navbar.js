@@ -8,7 +8,7 @@ import useRequest from "../../hooks/useRequest";
 import { classNames } from "primereact/utils";
 import Swal from "sweetalert2";
 
-const Navbar = ({ isHidden, currentUser }) => {
+const Navbar = ({ currentUser }) => {
   const { layoutConfig } = useContext(LayoutContext);
   const menuRef = useRef();
   const router = useRouter();
@@ -42,7 +42,7 @@ const Navbar = ({ isHidden, currentUser }) => {
           className="mr-0 lg:mr-2"
         />
         <span className="text-900 font-medium text-2xl line-height-3 mr-8">
-          SAKAI
+          Tickting
         </span>
       </Link>
       <StyleClass
@@ -59,27 +59,32 @@ const Navbar = ({ isHidden, currentUser }) => {
       </StyleClass>
       <div
         className={classNames(
-          "align-items-center surface-0 flex-grow-1 justify-content-end hidden lg:flex absolute lg:static w-full left-0 px-6 lg:px-0 z-2",
-          { hidden: isHidden }
+          "align-items-center flex-grow-1 justify-content-end hidden lg:flex absolute lg:static w-full left-0 px-6 lg:px-0 z-2"
         )}
         style={{ top: "100%" }}
       >
         <div className="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 mt-3 lg:mt-0">
           {currentUser ? (
             <>
-              {" "}
+              <Button
+                label="Create Ticket"
+                text
+                rounded
+                onClick={() => router.push("/tickets/new")}
+                className="border-none font-light line-height-2 text-blue-500"
+              ></Button>
+              <Button
+                label="My Orders"
+                text
+                rounded
+                onClick={() => router.push("/dashboard")}
+                className="border-none font-light line-height-2 text-blue-500"
+              ></Button>
               <Button
                 label="Logout"
                 text
                 rounded
                 onClick={() => logout()}
-                className="border-none font-light line-height-2 text-blue-500"
-              ></Button>
-              <Button
-                label="Dashboard"
-                text
-                rounded
-                onClick={() => router.push("/dashboard")}
                 className="border-none font-light line-height-2 text-blue-500"
               ></Button>
             </>
